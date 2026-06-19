@@ -1,12 +1,8 @@
-import { connection } from "next/server";
-
 function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 export async function RecentOrders() {
-  await connection();
-
   await new Promise((resolve) => setTimeout(resolve, 3500));
 
   const orders = Array.from({ length: 3 }, (_, i) => ({

@@ -1,12 +1,8 @@
-import { connection } from "next/server";
-
 function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 export async function ActiveUsers() {
-  await connection();
-
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
   const users = randomBetween(120, 500);
