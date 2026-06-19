@@ -1,65 +1,65 @@
-import Image from "next/image";
+import { Suspense } from "react";
+import { PageHeader } from "./_components/page-header";
+import { ActiveUsers } from "./_components/active-users";
+import { RecentOrders } from "./_components/recent-orders";
 
-export default function Home() {
+export default function DashboardPage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="mx-auto max-w-3xl px-4 py-10">
+      <PageHeader />
+
+      <div className="grid gap-6 sm:grid-cols-2">
+        <Suspense
+          fallback={
+            <div className="animate-pulse rounded-lg border border-gray-200 bg-gray-100 p-6">
+              <div className="mb-2 h-5 w-32 rounded bg-gray-200" />
+              <div className="h-8 w-20 rounded bg-gray-200" />
+            </div>
+          }
+        >
+          <ActiveUsers />
+        </Suspense>
+
+        <Suspense
+          fallback={
+            <div className="animate-pulse rounded-lg border border-gray-200 bg-gray-100 p-6">
+              <div className="mb-2 h-5 w-36 rounded bg-gray-200" />
+              <div className="space-y-3">
+                <div className="h-12 rounded bg-gray-200" />
+                <div className="h-12 rounded bg-gray-200" />
+                <div className="h-12 rounded bg-gray-200" />
+              </div>
+            </div>
+          }
+        >
+          <RecentOrders />
+        </Suspense>
+      </div>
+
+      <div className="mt-8 rounded-lg border border-purple-200 bg-purple-50 p-6">
+        <h2 className="text-lg font-semibold text-purple-800">
+          💡 ¿Qué está pasando aquí?
+        </h2>
+        <ul className="mt-2 space-y-1 text-sm text-purple-700">
+          <li>
+            <strong>Shell estático</strong> — El header y esta explicación se
+            prerenderizaron en build time. Llegan instantáneamente.
+          </li>
+          <li>
+            <strong>Active Users</strong> — Se resuelve en ~2s y se stremea al
+            cliente cuando está listo.
+          </li>
+          <li>
+            <strong>Recent Orders</strong> — Se resuelve en ~3.5s y se stremea
+            independientemente.
+          </li>
+          <li>
+            Cada sección dinámica tiene su propio{" "}
+            <code className="rounded bg-purple-200 px-1">{"<Suspense>"}</code>{" "}
+            boundary con un skeleton como fallback.
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }
